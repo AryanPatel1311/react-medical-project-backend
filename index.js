@@ -12,7 +12,7 @@ import bookingRoute from "./Routes/booking.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5173;
 
 const corsOptions = {
   origin: "http://localhost:5173",
