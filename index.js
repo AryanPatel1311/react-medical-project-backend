@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "react-medical-project-frontend-iota.vercel.app",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
