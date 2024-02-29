@@ -13,17 +13,14 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5173;
+const corsOptions = {
+  origin: true,
+};
 
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: "*" }));
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-
-  next();
-});
+app.use(cors(corsOptions));
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/doctors", doctorRoute);
