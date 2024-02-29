@@ -1,4 +1,3 @@
-// index.js
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -12,6 +11,7 @@ import bookingRoute from "./Routes/booking.js";
 dotenv.config();
 
 const app = express();
+const port = process.env.PORT || 8000;
 
 const corsOptions = {
   origin: true,
@@ -31,7 +31,7 @@ const connectDB = async () => {
     });
     console.log("MongoDB database is connected");
   } catch (err) {
-    console.log("MongoDB database connection failed");
+    console.log("MongoDB database is connection faild");
   }
 };
 
@@ -45,11 +45,7 @@ app.use("/api/v1/doctors", doctorRoute);
 app.use("/api/v1/reviews", reviewRoute);
 app.use("/api/v1/bookings", bookingRoute);
 
-// Use serverless function handler
-const server = app.listen();
-
-// Export handler for Vercel
-export default async (req, res) => {
-  await connectDB();
-  server(req, res);
-};
+app.listen(port, () => {
+  connectDB();
+  console.log("Server is running on port" + port);
+});
