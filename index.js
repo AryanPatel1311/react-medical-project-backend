@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
   res.send("Api is working");
 });
 
-// database connection
+// database connection new
 mongoose.set("strictQuery", false);
 const connectDB = async () => {
   try {
