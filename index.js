@@ -20,14 +20,12 @@ const port = process.env.PORT || 5173;
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-
-// CORS configuration
-const corsOptions = {
-  origin: "https://react-medical-project-frontend-iota.vercel.app",
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "react-medical-project-frontend-iota.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 // Database connection
 mongoose.set("strictQuery", false);
