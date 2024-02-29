@@ -15,8 +15,8 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const corsOptions = {
-  origin: process.env.CLIENT_SITE_URL || "http://localhost:5173",
-  credentials: true,
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE"],
 };
 
 // Middleware
