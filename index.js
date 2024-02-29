@@ -16,8 +16,10 @@ const port = process.env.PORT || 8000;
 
 const corsOptions = {
   origin:
-    process.env.NODE_ENV === "production" ? true : "http://localhost:5173",
-  credentials: true, // Enable credentials (cookies, authorization headers, etc.)
+    process.env.CLIENT_SITE_URL === "production"
+      ? true
+      : "http://localhost:5173",
+  credentials: true,
 };
 
 // Middleware
