@@ -1,6 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import cors from "cors";
+import cors from "cors"; // Import cors module
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoute from "./Routes/auth.js";
@@ -13,14 +13,16 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5173;
-const corsOptions = {
-  origin: "https://react-medical-project-frontend-iota.vercel.app",
-};
 
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOptions));
+
+// Apply CORS globally
+const corsOptions = {
+  origin: "https://react-medical-project-frontend-iota.vercel.app",
+  credentials: true,
+};
 app.use(cors(corsOptions));
 
 app.use("/api/v1/auth", authRoute);
