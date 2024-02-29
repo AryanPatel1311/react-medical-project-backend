@@ -14,13 +14,15 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5173;
 const corsOptions = {
-  origin: true,
+  origin: "https://react-medical-project-frontend-iota.vercel.app",
 };
 
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Enable preflight requests
+
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/doctors", doctorRoute);
@@ -38,8 +40,6 @@ const connectDB = async () => {
     console.log("MongoDB database is connected");
   } catch (err) {
     console.error("MongoDB database connection failed", err);
-    // Throw the error if you want to stop the server on connection failure
-    // throw err;
   }
 };
 
