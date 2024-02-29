@@ -21,7 +21,7 @@ const corsOptions = {
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Enable preflight requests
+app.use(cors(corsOptions));
 
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
@@ -42,9 +42,15 @@ const connectDB = async () => {
     console.error("MongoDB database connection failed", err);
   }
 };
-
-// Move the database connection call outside the app.listen callback
 connectDB();
+
+app.get("/cors", (req, res) => {
+  res.set(
+    "Access-Control-Allow-Origin",
+    "https://react-medical-project-frontend-iota.vercel.app"
+  );
+  res.send({ msg: "This has CORS enabled 🎈" });
+});
 
 // API root endpoint
 app.get("/", (req, res) => {
