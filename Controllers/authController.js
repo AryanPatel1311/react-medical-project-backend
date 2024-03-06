@@ -21,6 +21,8 @@ export const register = async (req, res) => {
       user = await User.findOne({ email });
     } else if (role == "doctor") {
       user = await Doctor.findOne({ email });
+    } else if (role === "admin") {
+      user = await User.findOne({ email });
     }
     if (user) {
       return res.status(400).json({ message: "User alredy exist" });
@@ -29,7 +31,7 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashpassword = await bcrypt.hash(password, salt);
 
-    if (role == "patient") {
+    if (role == "patient" || role === "admin") {
       user = new User({
         name,
         email,

@@ -124,3 +124,50 @@ export const getMyAppointment = async (req, res) => {
       .json({ success: false, message: "something went wrong,cannot get" });
   }
 };
+export const getAllAppointments = async (req, res) => {
+  try {
+    const appointments = await Booking.find({})
+      .populate({
+        path: "user",
+        select: "_id name email photo",
+      })
+      .populate("doctor");
+
+    const modifiedAppointments = appointments.map((appointment) => {
+      const { _id, user, doctor, ...rest } = appointment.toObject();
+      const modifiedUser = {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        photo: user.photo,
+      };
+      const modifiedDoctor = {
+        _id: doctor._id,
+        name: doctor.name,
+      };
+      return {
+        booking_id: _id,
+        ticketPrice: rest.ticketPrice,
+        timeSlots: rest.timeSlot,
+        status: rest.status,
+        isPaid: rest.isPaid,
+        createdAt: rest.createdAt,
+        updatedAt: rest.updatedAt,
+        __v: rest.__v,
+        user: modifiedUser,
+        doctor: modifiedDoctor,
+      };
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "All Appointments Found",
+      data: modifiedAppointments,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Appointments Not Found",
+    });
+  }
+};

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   deleteUser,
+  getAllAppointments,
   getAllUser,
   getMyAppointment,
   getSingleUser,
@@ -21,6 +22,12 @@ router.get(
   authenticate,
   restrict(["patient"]),
   getMyAppointment
+);
+router.get(
+  "/appointments/all",
+  authenticate,
+  restrict(["admin"]),
+  getAllAppointments
 );
 
 export default router;
