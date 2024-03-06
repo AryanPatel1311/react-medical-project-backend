@@ -10,10 +10,7 @@ export const getChekoutSession = async (req, res) => {
     const user = await User.findById(req.userId);
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const selectedTimeSlot = req.body.timeSlot;
-
-    // create stipe chekout session
     console.log("Selected Time Slot:", selectedTimeSlot);
-
     const session = await stripe.checkout.sessions.create({
       shipping_address_collection: {
         allowed_countries: ["IN", "US", "CA"],
@@ -40,8 +37,6 @@ export const getChekoutSession = async (req, res) => {
       ],
     });
 
-    // create new Booking
-
     const booking = new Booking({
       doctor: doctor._id,
       user: user._id,
@@ -49,7 +44,7 @@ export const getChekoutSession = async (req, res) => {
       session: session.id,
       timeSlot: selectedTimeSlot,
     });
-
+    booking.isPaid = true;
     await booking.save();
 
     res
